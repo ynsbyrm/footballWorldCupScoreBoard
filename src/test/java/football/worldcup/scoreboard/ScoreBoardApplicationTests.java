@@ -34,4 +34,18 @@ class ScoreBoardApplicationTests {
 		assertFalse(scoreBoardController.startNewGame("TeamA", "TeamB"), "Same match cannot be added twice");
 	}
 
+	@Test
+	void finishGame(){
+		assertFalse(scoreBoardController.finishGame("TeamA", null), "Home or away team cannot be null or emptyString");
+		assertFalse(scoreBoardController.finishGame(null, "TeamB"), "Home or away team cannot be null or emptyString");
+		assertFalse(scoreBoardController.finishGame(null, null), "Home or away team cannot be null or emptyString");
+		assertFalse(scoreBoardController.finishGame("TeamA", ""), "Home or away team cannot be null or emptyString");
+		assertFalse(scoreBoardController.finishGame("", "TeamB"), "Home or away team cannot be null or emptyString");
+		assertFalse(scoreBoardController.finishGame("", ""), "Home or away team cannot be null or emptyString");
+		assertFalse(scoreBoardController.finishGame("TeamA", "TeamA"), "Home or away team cannot be same");
+		assertFalse(scoreBoardController.finishGame("TeamA", "TeamB"), "Match is not on the scoreboard");
+		scoreBoardController.startNewGame("TeamA", "TeamB");
+		assertTrue(scoreBoardController.finishGame("TeamA", "TeamB"));
+	}
+
 }
