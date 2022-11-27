@@ -8,7 +8,7 @@ import java.util.*;
 public class ScoreBoardController {
 
     private List<Match> scoreBoard = new ArrayList<>();
-    private List<Match> finishedGames = new ArrayList<>();
+    //private List<Match> finishedGames = new ArrayList<>();
     public boolean startNewGame(@NotNull String homeTeam, @NotNull String awayTeam){
         if(homeTeam.isBlank() || awayTeam.isBlank() || homeTeam.equals(awayTeam)){
             return false;
@@ -37,8 +37,8 @@ public class ScoreBoardController {
          */
         for(Match currentMatch : scoreBoard){
             if (currentMatch.getHomeTeam().equals(homeTeam) && currentMatch.getAwayTeam().equals(awayTeam)){
-                if(finishedGames.add(currentMatch)){
-                    scoreBoard.remove(currentMatch);
+                if(scoreBoard.remove(currentMatch)){
+                    //finishedGames.add(currentMatch);
                     return true;
                 }
             }
