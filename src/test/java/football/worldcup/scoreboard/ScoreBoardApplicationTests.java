@@ -52,4 +52,23 @@ class ScoreBoardApplicationTests {
 		assertTrue(scoreBoardController.finishGame("TeamA", "TeamB"));
 	}
 
+	@Test
+	void updateScore(){
+
+		assertFalse(scoreBoardController.updateScore("TeamA", null, 0, 0), "Home or away team cannot be null or emptyString");
+		assertFalse(scoreBoardController.updateScore(null, "TeamB", 0, 0), "Home or away team cannot be null or emptyString");
+		assertFalse(scoreBoardController.updateScore(null, null, 0, 0), "Home or away team cannot be null or emptyString");
+		assertFalse(scoreBoardController.updateScore("TeamA", "", 0, 0), "Home or away team cannot be null or emptyString");
+		assertFalse(scoreBoardController.updateScore("", "TeamB", 0, 0), "Home or away team cannot be null or emptyString");
+		assertFalse(scoreBoardController.updateScore("", "", 0, 0), "Home or away team cannot be null or emptyString");
+		assertFalse(scoreBoardController.updateScore("TeamA", "TeamA", 0, 0), "Home or away team cannot be same");
+		assertFalse(scoreBoardController.updateScore("TeamA", "TeamB", 0, 0), "Match is not on the scoreboard");
+		scoreBoardController.startNewGame("TeamA", "TeamB");
+		assertTrue(scoreBoardController.updateScore("TeamA", "TeamB", 0, 0));
+		assertFalse(scoreBoardController.updateScore("TeamA", "TeamB", -1, 0), "Home or away team's score can not be negative");
+		assertFalse(scoreBoardController.updateScore("TeamA", "TeamB", 0, -1), "Home or away team's score can not be negative");
+		assertFalse(scoreBoardController.updateScore("TeamA", "TeamB", -1, -1), "Home or away team's score can not be negative");
+		assertTrue(scoreBoardController.updateScore("TeamA", "TeamB", 1, 0));
+	}
+
 }
