@@ -3,9 +3,7 @@ package football.worldcup.scoreboard.controller;
 import football.worldcup.scoreboard.entity.Match;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class ScoreBoardController {
 
@@ -65,6 +63,32 @@ public class ScoreBoardController {
     }
 
     public List<Match> summary(){
-        return new ArrayList<>();
+        HashMap<Integer, List<Match>> summary = new HashMap<>();
+        for(int i=scoreBoard.size()-1; i>=0; i--){
+            Match currentMatch = scoreBoard.get(i);
+            int totalScore = currentMatch.getHomeTeamScore() + currentMatch.getAwayTeamScore();
+            if(summary.containsKey(totalScore)){
+                summary.get(totalScore).add(currentMatch);
+            }else{
+                ArrayList<Match> newList = new ArrayList<>();
+                newList.add(currentMatch);
+                summary.put(totalScore, newList);
+            }
+        }
+
+        List<Integer> sortedKeys = new ArrayList(summary.keySet());
+        Collections.sort(sortedKeys);
+        Collections.reverse(sortedKeys);
+
+        List<Match> sortedList = new ArrayList<>();
+
+        for(Integer currentKey:sortedKeys){
+            summary.get(currentKey).forEach((Match match) -> {
+                sortedList.add(match);
+                //System.out.println(match);
+            });
+        }
+
+        return sortedList;
     }
 }
