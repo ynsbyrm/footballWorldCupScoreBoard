@@ -4,6 +4,7 @@ import football.worldcup.scoreboard.entity.Match;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class ScoreBoardController {
@@ -47,8 +48,20 @@ public class ScoreBoardController {
         return false;
     }
 
-    public boolean updateScore(String homeTeam, String awayTeam, int homeTeamScore, int awayTeamScore){
-        return true;
+    public boolean updateScore(@NotNull String homeTeam, @NotNull String awayTeam, @NotNull int homeTeamScore, @NotNull int awayTeamScore){
+        if(homeTeam.isBlank() || awayTeam.isBlank() || homeTeam.equals(awayTeam) || homeTeamScore < 0 || awayTeamScore < 0){
+            return false;
+        }
+
+        for(int i=0; i<scoreBoard.size(); i++){
+            Match currentMatch = scoreBoard.get(i);
+            if(currentMatch.getHomeTeam().equals(homeTeam) && currentMatch.getAwayTeam().equals(awayTeam)){
+                currentMatch.setHomeTeamScore(homeTeamScore);
+                currentMatch.setAwayTeamScore(awayTeamScore);
+                return true;
+            }
+        }
+        return false;
     }
 
     public List<?> summary(){
