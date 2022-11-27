@@ -1,11 +1,29 @@
 package football.worldcup.scoreboard.controller;
 
+import football.worldcup.scoreboard.entity.Match;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class ScoreBoardController {
 
-    public boolean startNewGame(String homeTeam, String awayTeam){
+    private List<Match> scoreBoard = new ArrayList<>();
+    public boolean startNewGame(@NotNull String homeTeam, @NotNull String awayTeam){
+        if(homeTeam.isBlank() || awayTeam.isBlank() || homeTeam.equals(awayTeam)){
+            return false;
+        }
+
+        /*
+        Only check for contains won't be fit enough because user can try to add same match after score update.
+         */
+        for(Match currentMatch : scoreBoard){
+            if (currentMatch.getHomeTeam().equals(homeTeam) && currentMatch.getAwayTeam().equals(awayTeam)){
+                return false;
+            }
+        }
+
+        scoreBoard.add(new Match(homeTeam, awayTeam, 0, 0));
         return true;
     }
 
