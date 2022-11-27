@@ -74,4 +74,15 @@ class ScoreBoardApplicationTests {
 		assertTrue(scoreBoardController.updateScore("TeamA", "TeamB", 1, 0));
 	}
 
+	@Test
+	void summary(){
+		scoreBoardController.startNewGame("TeamA", "TeamB");
+		scoreBoardController.updateScore("TeamA", "TeamB", 1, 0);
+		scoreBoardController.startNewGame("TeamC", "TeamD");
+		scoreBoardController.updateScore("TeamC", "TeamD", 1, 0);
+		scoreBoardController.startNewGame("TeamE", "TeamF");
+		scoreBoardController.updateScore("TeamE", "TeamF", 0, 0);
+		assertTrue(scoreBoardController.summary().get(0).getHomeTeam().equals("TeamC"));
+		assertTrue(scoreBoardController.summary().get(2).getHomeTeam().equals("TeamE"));
+	}
 }

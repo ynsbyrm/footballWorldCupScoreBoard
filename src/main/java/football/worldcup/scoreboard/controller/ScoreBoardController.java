@@ -64,7 +64,7 @@ public class ScoreBoardController {
         return false;
     }
 
-    public List<?> summary(){
+    public List<Match> summary(){
         return new ArrayList<>();
     }
 }
